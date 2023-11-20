@@ -1,11 +1,19 @@
 import React from "react";
-import { Button, Card, CardBody, CardFooter, CardHeader, IconButton, Typography } from '@material-tailwind/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  IconButton,
+  Typography,
+} from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 
-const ProductCard = ({product, key}) => {
-    const navigate = useNavigate();
-    
+const ProductCard = ({ product, key }) => {
+  const navigate = useNavigate();
+
   return (
     <Card
       className="max-w-[24rem] w-1/4 overflow-hidden cursor-pointer"
@@ -22,7 +30,7 @@ const ProductCard = ({product, key}) => {
           src={product.images[0]}
           alt={product.productName}
           className="object-cover w-full h-full"
-          style={{ objectFit: "cover" }} 
+          style={{ objectFit: "cover" }}
         />
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
         <IconButton
@@ -51,13 +59,11 @@ const ProductCard = ({product, key}) => {
           </Typography>
         </div>
         <div className="mb-2 flex items-center justify-start">
-          <Typography
-            variant="small"
-            color="gray"
-            className="font-normal opacity-75"
-          >
-            {product.size}
-          </Typography>
+          <div className="w-[20px] h-5 px-4 text-black rounded border border-black flex-col justify-center items-center inline-flex">
+            <div className="text-black text-xl font-medium font-['Red Hat Display'] leading-10 tracking-tight">
+              {product.size}
+            </div>
+          </div>
           <Typography
             variant="small"
             color="gray"
