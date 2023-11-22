@@ -4,6 +4,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Backend_URL } from '../App';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,12 +22,12 @@ const Login = () => {
       let userVerify = data.get("userVerify");
       let password = data.get("password");
       console.log(userVerify, password);
-      let res = await axios.post(`${URL}/users/signin`, {
+      let res = await axios.post(`${Backend_URL}/users/signin`, {
         userVerify,
         password,
       });
       if (res.status === 200) {
-        navigate("/home");
+        navigate("/men");
         sessionStorage.setItem("token", res.data.token);
         // toast.success(res.data.message);
       }
@@ -140,7 +141,7 @@ const Login = () => {
 
               <Typography color="gray" className="mt-4 text-center font-normal">
                 Don't have an account?{" "}
-                <Link to="#" className="font-medium text-gray-900">
+                <Link to="/signup" className="font-medium text-gray-900">
                   Sign Up
                 </Link>
               </Typography>

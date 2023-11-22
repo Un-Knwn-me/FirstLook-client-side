@@ -7,8 +7,8 @@ import {
   Carousel,
   Chip,
   Tooltip,
+  Typography,
 } from "@material-tailwind/react";
-import { RadioGroup } from "@headlessui/react";
 import Rating from "../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
 import { listProductDetails } from "../actions/ProductActions";
@@ -33,6 +33,7 @@ const ProductView = (history) => {
   const increaseQuantity = (productId) => {
     if (qty < product.stock) {
       setQty(qty + 1);
+      console.log(process.env.REACT_APP_Backend_URL)
     }
   };
 
@@ -46,16 +47,16 @@ const ProductView = (history) => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
 
-  const handleAddToCart = async() => {
+  const handleAddToCart = async () => {
     try {
       // navigate(`/cart/${id}?qty=${qty}`);
       navigate(`/cart/${id}/${qty}`);
       // setSeverity('success');
       // setAlertMessage('Added to cart');
       // setShowAlert(true);
-      await console.log('working');
+      await console.log("working");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // setSeverity('error');
       // setAlertMessage(`Error: ${error.message}`);
       // setShowAlert(true);
@@ -100,7 +101,7 @@ const ProductView = (history) => {
             <div className="mx-auto mt-6 sm:px-6">
               <div className="grid grid-cols-12 gap-6">
                 {/* Left column with product image */}
-                <div className="h-fit col-span-12 md:col-span-6">
+                <div className="h-fit col-span-12 md:col-span-7">
                   {/* Image gallery */}
                   <Carousel className="rounded-xl md:max-h-screen">
                     {product.images.map((image, index) => (
@@ -115,7 +116,7 @@ const ProductView = (history) => {
                 </div>
 
                 {/* Right column with product name */}
-                <div className="col-span-12 md:col-span-6">
+                <div className="col-span-12 md:col-span-5">
                   <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                     {product.brandName} - {product.productName}
                   </h1>
@@ -252,157 +253,109 @@ const ProductView = (history) => {
                   </div>
 
                   {/* ... (rest of your product information) */}
-                </div>
-              </div>
-            </div>
 
-            {/* Product info */}
-            <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-              <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                  {product.productName}
-                </h1>
-              </div>
-
-              {/* Options */}
-              <div className="mt-4 lg:row-span-3 lg:mt-0">
-                <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl tracking-tight text-gray-900">
-                  Rs. {product.salesPrice}
-                </p>
-
-                {/* Reviews */}
-                <div className="mt-6">
-                  <h3 className="sr-only">Reviews</h3>
-                  <Rating
-                    value={product.ratings}
-                    text={`${product.numOfReviews} reviews`}
-                  />
-                </div>
-
-                <form className="mt-10">
-                  {/* Colors */}
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-900">Color</h3>
-
-                    <RadioGroup value={"black"} className="mt-4">
-                      <RadioGroup.Label className="sr-only">
-                        Choose a color
-                      </RadioGroup.Label>
-                      <div className="flex items-center space-x-3">
-                        <RadioGroup.Option
-                          value={"black"}
-                          className="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none"
-                        >
-                          <RadioGroup.Label as="span" className="sr-only">
-                            Black
-                          </RadioGroup.Label>
-                          <span
-                            aria-hidden="true"
-                            className={
-                              "h-8 w-8 rounded-full border border-black border-opacity-10"
-                            }
-                          />
-                        </RadioGroup.Option>
-                      </div>
-                    </RadioGroup>
-                  </div>
-
-                  {/* Sizes */}
-                  <div className="mt-10">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-gray-900">
-                        Size
-                      </h3>
-                      <Link
-                        to="#"
-                        className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                      >
-                        Size guide
-                      </Link>
-                    </div>
-
-                    <RadioGroup value={"XL"} className="mt-4">
-                      <RadioGroup.Label className="sr-only">
-                        Choose a size
-                      </RadioGroup.Label>
-                      <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                        <RadioGroup.Option
-                          value={"XL"}
-                          className={
-                            "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
-                          }
-                        >
-                          <>
-                            <RadioGroup.Label as="span">XL</RadioGroup.Label>
-                            <span
-                              className="pointer-events-none absolute -inset-px rounded-md"
-                              aria-hidden="true"
-                            />
-                            <span
-                              aria-hidden="true"
-                              className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                            >
-                              <svg
-                                className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                viewBox="0 0 100 100"
-                                preserveAspectRatio="none"
-                                stroke="currentColor"
-                              >
-                                <line
-                                  x1={0}
-                                  y1={100}
-                                  x2={100}
-                                  y2={0}
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                              </svg>
-                            </span>
-                          </>
-                        </RadioGroup.Option>
-                      </div>
-                    </RadioGroup>
-                  </div>
-
-                </form>
-              </div>
-
-              <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
-                {/* Description and details */}
-                <div>
-                  <h3 className="sr-only">Description</h3>
-
-                  <div className="space-y-6">
-                    <p className="text-base text-gray-900">
+                  <div className="my-20 w-full h-fit border-2 border-gray-200">
+                    <Typography className="m-5" variant="h5">
+                      Product Description:
+                    </Typography>
+                    <Typography className="mx-5" variant="paragraph">
                       {product.description}
-                    </p>
-                  </div>
-                </div>
+                    </Typography>
 
-                <div className="mt-10">
-                  <h3 className="text-sm font-medium text-gray-900">
-                    Highlights
-                  </h3>
+                    <Typography className="m-5" variant="h6">
+                      Product Details:
+                    </Typography>
+                    <Typography className="mx-5 -mt-3" variant="small">
+                      {product.notes}
+                    </Typography>
 
-                  {/* <div className="mt-4">
-                    <ul
-                      role="list"
-                      className="list-disc space-y-2 pl-4 text-sm"
-                    >
-                      <li className="text-gray-400">
-                        <span className="text-gray-600">
-                          jighlight highlights
-                        </span>
-                      </li>
-                    </ul>
-                  </div> */}
-                </div>
+                    <Typography className="m-5" variant="h6">
+                      Size & Fit:
+                    </Typography>
+                    <Typography className="mx-5 -mt-3" variant="small">
+                      {product.style}
+                    </Typography>
 
-                <div className="mt-10">
-                  <h2 className="text-sm font-medium text-gray-900">Details</h2>
+                    <Typography className="m-5" variant="h6">
+                      Material & Care:
+                    </Typography>
+                    <Typography className="mx-5 -mt-3" variant="small">
+                      {product.fabric}
+                    </Typography>
+                    <Typography className="mx-5 mt-1" variant="small">
+                      Machine wash
+                    </Typography>
 
-                  <div className="mt-4 space-y-6">
-                    <p className="text-sm text-gray-600">details default</p>
+                    <Typography className="m-5" variant="h6">
+                      Specification:
+                    </Typography>
+                    <div className="grid grid-cols-12 gap-6 mb-5">
+                      {/* Left column with product Spec */}
+                      <div className="h-fit col-span-6">
+                        <Typography
+                          className="mx-5 text-xs text-slate-600"
+                          variant="small"
+                        >
+                          Fabric
+                        </Typography>
+                        <Typography className="mx-5 mt-1" variant="small">
+                          {product.fabric}
+                        </Typography>
+
+                        <Typography
+                          className="mx-5 mt-4 text-xs text-slate-600"
+                          variant="small"
+                        >
+                          Fit
+                        </Typography>
+                        <Typography className="mx-5 mt-1" variant="small">
+                          {product.fit} Regular Fit
+                        </Typography>
+
+                        <Typography
+                          className="mx-5 mt-4 text-xs text-slate-600"
+                          variant="small"
+                        >
+                          Type
+                        </Typography>
+                        <Typography className="mx-5 mt-1" variant="small">
+                          {product.productType}
+                        </Typography>
+                      </div>
+
+                      {/* Right column with product spec */}
+                      <div className="h-fit col-span-6">
+                        <Typography
+                          className="mx-5 text-xs text-slate-600"
+                          variant="small"
+                        >
+                          Tag
+                        </Typography>
+                        <Typography className="mx-5 mt-1" variant="small">
+                          {product.tag}
+                        </Typography>
+
+                        <Typography
+                          className="mx-5 mt-4 text-xs text-slate-600"
+                          variant="small"
+                        >
+                          Category
+                        </Typography>
+                        <Typography className="mx-5 mt-1" variant="small">
+                          {product.category} Regular Fit
+                        </Typography>
+
+                        <Typography
+                          className="mx-5 mt-4 text-xs text-slate-600"
+                          variant="small"
+                        >
+                          SKU
+                        </Typography>
+                        <Typography className="mx-5 mt-1" variant="small">
+                          {product.sku}
+                        </Typography>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

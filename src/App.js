@@ -4,6 +4,10 @@ import Mens from './pages/Mens';
 import Cart from './pages/Cart';
 import ProductView from './pages/ProductView';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+
+export const Backend_URL = "https://madmonkeyz-ecom.onrender.com";
+export const token = sessionStorage.getItem('token');
 
 function App() {
   return (
@@ -11,6 +15,8 @@ function App() {
    <Routes>
 
     <Route exact path='/' element={<Login />} />
+
+    <Route path='/signup' element={<SignUp />} />
 
     <Route path='/men' element={<Mens />} />
 
