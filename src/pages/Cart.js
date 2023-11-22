@@ -5,17 +5,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 // import { useEffect } from 'react';
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
+// import RemoveIcon from "@mui/icons-material/Remove";
+// import AddIcon from "@mui/icons-material/Add";
 // import { addToCart } from '../actions/CartActions';
-import { Button, } from "@material-tailwind/react";
+// import { Button, } from "@material-tailwind/react";
 
 const Cart = ({ location, history }) => {
     const { id, qty } = useParams();
     // const qty = location.search ? Number(location.search.split('=')[1]) : 1
     const dispatch = useDispatch()
 
-    console.log(dispatch, id)
+    console.log(dispatch, id, qty)
 
     const cart = useSelector(state => state.cart)
     const { cartItems } = cart;
