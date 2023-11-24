@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="col-span-12 md:col-span-3">
+    <div className="w-full">
     <Card
       className="overflow-hidden cursor-pointer"
       key={product._id}
@@ -53,11 +53,9 @@ const ProductCard = ({ product }) => {
       <CardBody className="-my-4">
         <div className="mb-2 flex items-center">
           <Typography color="blue-gray" className="font-medium">
-            {product.brandName}
+            {product.brandName} - {product.category}
           </Typography>
-          <Typography color="blue-gray" className="ml-2 font-medium">
-            {product.category}
-          </Typography>
+          
         </div>
         <div className="mb-2 flex items-center justify-start">
           <div className="w-[20px] h-5 px-4 text-black rounded border border-black flex-col justify-center items-center inline-flex">
