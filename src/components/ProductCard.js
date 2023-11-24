@@ -11,13 +11,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 
-const ProductCard = ({ product, key }) => {
+const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   return (
+    <div className="col-span-12 md:col-span-3">
     <Card
-      className="max-w-[24rem] w-1/4 overflow-hidden cursor-pointer"
-      key={key}
+      className="overflow-hidden cursor-pointer"
+      key={product._id}
       onClick={() => navigate(`/men/${product._id}`)}
     >
       <CardHeader
@@ -49,7 +50,7 @@ const ProductCard = ({ product, key }) => {
           </svg>
         </IconButton>
       </CardHeader>
-      <CardBody>
+      <CardBody className="-my-4">
         <div className="mb-2 flex items-center">
           <Typography color="blue-gray" className="font-medium">
             {product.brandName}
@@ -73,7 +74,7 @@ const ProductCard = ({ product, key }) => {
           </Typography>
         </div>
         <div className="mb-2 flex items-center justify-start">
-          <Rating value={product.ratings} text={`${product.ratings} reviews`} />
+          <Rating value={product.ratings} text={`${product.numOfReviews} reviews`} />
         </div>
         <div className="mb-2 flex items-center justify-start">
           <Typography color="blue-gray" className="font-medium">
@@ -94,6 +95,7 @@ const ProductCard = ({ product, key }) => {
         </Button>
       </CardFooter>
     </Card>
+    </div>
   );
 };
 

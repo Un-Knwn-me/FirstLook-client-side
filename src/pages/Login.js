@@ -21,7 +21,7 @@ const Login = () => {
 
       let userVerify = data.get("userVerify");
       let password = data.get("password");
-      console.log(userVerify, password);
+      console.log(Backend_URL);
       let res = await axios.post(`${Backend_URL}/users/signin`, {
         userVerify,
         password,

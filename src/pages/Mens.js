@@ -1,21 +1,66 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import banner from "../assets/images/mens.jpg";
 import ProductCard from "../components/ProductCard";
-import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../actions/ProductActions";
 import Loader from "../components/Loader";
-import Alertbar from "../components/Alertbar";
+import { Checkbox, Input, List, ListItem, ListItemPrefix, Option, Select, Typography } from "@material-tailwind/react";
+import axios from "axios";
+import { Backend_URL, token } from "../App";
+import SizeCheckbox from "../components/SizeCheckbox";
 
 const Mens = () => {
-  const dispatch = useDispatch();
-
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState("");
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
+  const [sortBy, setSortBy] = useState("");
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    fetchProducts();
+  }, [sortBy]);
+
+  const handleFilterChange = () => {
+    fetchProducts();
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const queryParams = {
+        category,
+        minPrice,
+        maxPrice,
+        sortBy,
+        color,
+        size,
+      };
+
+      // Get products
+      const response = await axios.get(`${Backend_URL}/product/list`, {
+        params: queryParams,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const [selectedSizes, setSelectedSizes] = useState([]);
+
+  const handleSizeChange = (size, isChecked) => {
+    if (isChecked) {
+      setSelectedSizes((prevSelectedSizes) => [...prevSelectedSizes, size]);
+    } else {
+      setSelectedSizes((prevSelectedSizes) =>
+        prevSelectedSizes.filter((selectedSize) => selectedSize !== size)
+      );
+    }
+  };
 
   return (
     <>
@@ -38,24 +83,256 @@ const Mens = () => {
         <p className="text-2xl font-semibold">Apparel for Mens</p>
       </div>
 
-      <div className="flex my-2 mx-10">
-        <div className="w-1/4 bg-gray-200 p-4">
-          filterzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+      <div className="grid grid-cols-12 gap-6 mx-10">
+        {/* Left column for filter */}
+        <div className="h-fit col-span-0 p-5 md:col-span-3">
+          <Typography variant="h6" className="mb-5">
+            Filter:-
+          </Typography>
+          
+          <div className="bg-gray-200 p-5">
+            {/* Category */}
+            <div>
+            <Typography color="blue-gray" variant="lead" className="text-base font-medium">
+              Category:
+            </Typography>
+          <List>
+        <ListItem className="p-0">
+          <label
+            htmlFor="vertical-list-react"
+            className="flex w-full cursor-pointer items-center px-3 py-2"
+          >
+            <ListItemPrefix className="mr-3">
+              <Checkbox
+                id="vertical-list-react"
+                ripple={false}
+                className="hover:before:opacity-0"
+                containerProps={{
+                  className: "p-0",
+                }}
+              />
+            </ListItemPrefix>
+            <Typography color="blue-gray" variant="paragraph" className="text-base">
+              T-Shirt
+            </Typography>
+          </label>
+        </ListItem>
+        <ListItem className="p-0">
+          <label
+            htmlFor="vertical-list-vue"
+            className="flex w-full cursor-pointer items-center px-3 py-2"
+          >
+            <ListItemPrefix className="mr-3">
+              <Checkbox
+                id="vertical-list-vue"
+                ripple={false}
+                className="hover:before:opacity-0"
+                containerProps={{
+                  className: "p-0",
+                }}
+              />
+            </ListItemPrefix>
+            <Typography color="blue-gray" variant="paragraph" className="text-base">
+              Shirt
+            </Typography>
+          </label>
+        </ListItem>
+        <ListItem className="p-0">
+          <label
+            htmlFor="vertical-list-svelte"
+            className="flex w-full cursor-pointer items-center px-3 py-2"
+          >
+            <ListItemPrefix className="mr-3">
+              <Checkbox
+                id="vertical-list-svelte"
+                ripple={false}
+                className="hover:before:opacity-0"
+                containerProps={{
+                  className: "p-0",
+                }}
+              />
+            </ListItemPrefix>
+            <Typography color="blue-gray" variant="paragraph" className="text-base">
+              Pant
+            </Typography>
+          </label>
+        </ListItem>
+      </List>
+            </div>
+
+            {/* Color */}
+            <div>
+            <Typography color="blue-gray" variant="lead" className="text-base font-medium">
+              Category:
+            </Typography>
+          <List>
+        <ListItem className="p-0">
+          <label
+            htmlFor="vertical-list-react"
+            className="flex w-full cursor-pointer items-center px-3 py-2"
+          >
+            <ListItemPrefix className="mr-3">
+              <Checkbox
+                id="vertical-list-react"
+                ripple={false}
+                className="hover:before:opacity-0"
+                containerProps={{
+                  className: "p-0",
+                }}
+              />
+            </ListItemPrefix>
+            <Typography color="blue-gray" variant="paragraph" className="text-base">
+              T-Shirt
+            </Typography>
+          </label>
+        </ListItem>
+        <ListItem className="p-0">
+          <label
+            htmlFor="vertical-list-vue"
+            className="flex w-full cursor-pointer items-center px-3 py-2"
+          >
+            <ListItemPrefix className="mr-3">
+              <Checkbox
+                id="vertical-list-vue"
+                ripple={false}
+                className="hover:before:opacity-0"
+                containerProps={{
+                  className: "p-0",
+                }}
+              />
+            </ListItemPrefix>
+            <Typography color="blue-gray" variant="paragraph" className="text-base">
+              Shirt
+            </Typography>
+          </label>
+        </ListItem>
+        <ListItem className="p-0">
+          <label
+            htmlFor="vertical-list-svelte"
+            className="flex w-full cursor-pointer items-center px-3 py-2"
+          >
+            <ListItemPrefix className="mr-3">
+              <Checkbox
+                id="vertical-list-svelte"
+                ripple={false}
+                className="hover:before:opacity-0"
+                containerProps={{
+                  className: "p-0",
+                }}
+              />
+            </ListItemPrefix>
+            <Typography color="blue-gray" variant="paragraph" className="text-base">
+              Pant
+            </Typography>
+          </label>
+        </ListItem>
+      </List>
+            </div>
+
+{/* Price */}
+<div>
+            <Typography color="blue-gray" variant="lead" className="text-base font-medium mb-4">
+              Price:
+            </Typography>
+            <div className="grid grid-cols-12 gap-3">
+  <div className="col-span-6">
+    <Input
+      label="Min Price"
+      type="number"
+      min="0"
+      className="w-full sm:w-1/2"
+    />
+  </div>
+  
+  <div className="col-span-6">
+    <Input
+      label="Max Price"
+      type="number"
+      min="100"
+      className="w-full sm:w-1/2"
+    />
+  </div>
+</div>
+
+          
+            </div>
+
+            {/* Size */}
+            <div>
+            <Typography color="blue-gray" variant="lead" className="text-base font-medium mb-4">
+              Price:
+            </Typography>
+            <div className="flex space-x-4">
+      <SizeCheckbox size="M" isChecked={selectedSizes.includes("M")} onChange={handleSizeChange} />
+      <SizeCheckbox size="L" isChecked={selectedSizes.includes("L")} onChange={handleSizeChange} />
+      <SizeCheckbox size="XL" isChecked={selectedSizes.includes("XL")} onChange={handleSizeChange} />
+
+      <div className="mt-4">
+        <Typography variant="body1">Selected Sizes: {selectedSizes.join(", ")}</Typography>
+      </div>
+    </div>
+          
+            </div>
+
+          </div>
+
+
         </div>
 
-        {/* product card */}
-        <div className="grid grid-col-4 gap-5 w-3/4 p-4">
-          {loading ? (
+        {/* Right column with product listing */}
+        <div className="h-fit mb-20 col-span-12 md:col-span-9">
+          <div className="flex items-center justify-between mt-5 mb-10">
+            <Typography variant="h6">Mad Monkeyz Premium</Typography>
+            {/* sort */}
+            <div className="flex items-center gap-4">
+  <Typography variant="small" color="blue-gray" className="font-medium">
+    Sort By
+  </Typography>
+  <div className="w-full">
+    <Select
+      placeholder="Sort By"
+      name="sortBy"
+      id="sortBy"
+      autoComplete="off"
+      labelProps={{
+        className: "before:content-none after:content-none",
+      }}
+      className="border-t border-blue-gray-200 focus:border-gray-600 focus-visible:border-gray-600 w-full"
+      required
+      value={sortBy}
+      onChange={(value) => setSortBy(value)}
+    >
+      <Option sortBy="" className="flex items-center gap-2">
+        None
+      </Option>
+      <Option sortBy="createdAt" className="flex items-center gap-2">
+        Newest
+      </Option>
+      <Option value="L" className="flex items-center gap-2">
+        Oldest
+      </Option>
+      <Option value="XL" className="flex items-center gap-2">
+        Price: High to Low
+      </Option>
+      <Option value="2XL" className="flex items-center gap-2">
+        Price: Low to High
+      </Option>
+    </Select>
+  </div>
+</div>
+
+          </div>
+          
+          {products && products.length === 0 ? (
             <Loader />
-          ) : error ? (
-            <Alertbar severity="info">{error}</Alertbar>
           ) : (
-            <div>
-              {products.map((product, key) => (
-                <ProductCard product={product} key={key} />
+            <div className="grid grid-cols-12 gap-6">
+              {products.map((product) => (
+                <ProductCard product={product} />
               ))}
             </div>
           )}
+          
         </div>
       </div>
     </>
