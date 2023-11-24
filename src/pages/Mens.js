@@ -6,7 +6,7 @@ import Loader from "../components/Loader";
 import { Button, Option, Select, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import { Backend_URL, token } from "../App";
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import {
   FormControl,
@@ -96,39 +96,9 @@ const Mens = () => {
         open={isSidebarOpen}
         onClose={toggleSidebar}
       >
-        <div className="absolute inset-0 overflow-hidden">
-          <Transition
-            show={isSidebarOpen}
-            enter="transform transition ease-in-out duration-500 sm:duration-700"
-            enterFrom="opacity-0 translate-x-full"
-            enterTo="opacity-100 translate-x-0"
-            leave="transform transition ease-in-out duration-500 sm:duration-700"
-            leaveFrom="opacity-100 translate-x-0"
-            leaveTo="opacity-0 translate-x-full"
-          >
-            <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition>
-
-          <div className="fixed inset-y-0 right-0 max-w-full flex">
-            <Transition
-              show={isSidebarOpen}
-              enter="transform transition ease-in-out duration-500 sm:duration-700"
-              enterFrom="opacity-0 translate-x-full"
-              enterTo="opacity-100 translate-x-0"
-              leave="transform transition ease-in-out duration-500 sm:duration-700"
-              leaveFrom="opacity-100 translate-x-0"
-              leaveTo="opacity-0 translate-x-full"
-            >
-              <div className="w-screen max-w-md bg-white overflow-y-scroll">
-                <Transition
-                  show={isSidebarOpen}
-                  enter="ease-in-out duration-500"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in-out duration-500"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
+       <div className="absolute inset-0 overflow-hidden">
+    <div className="fixed inset-y-0 right-0 max-w-full flex">
+      <div className="w-screen max-w-md overflow-y-scroll bg-white">
                   <div className="absolute top-0 left-0 pt-4 pl-4">
                     <button
                       type="button"
@@ -139,7 +109,6 @@ const Mens = () => {
                       <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                   </div>
-                </Transition>
                 <div className="h-full px-5 flex flex-col py-10 bg-white shadow-xl overflow-y-scroll">
                 <div className="flex justify-between">
             <Typography variant="h6" className="mb-5">
@@ -312,7 +281,6 @@ const Mens = () => {
           </div>
                 </div>
               </div>
-            </Transition>
           </div>
         </div>
       </Dialog>
