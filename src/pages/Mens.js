@@ -106,7 +106,7 @@ const Mens = () => {
                       onClick={toggleSidebar}
                     >
                       <span className="sr-only">Close</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                      <XMarkIcon className="h-7 w-7 text-gray-900" aria-hidden="true" />
                     </button>
                   </div>
                 <div className="h-full px-5 flex flex-col py-10 bg-white shadow-xl overflow-y-scroll">
