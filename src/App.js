@@ -6,7 +6,7 @@ import ProductView from './pages/ProductView';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 
-export const Backend_URL = "http://localhost:8080";
+export const Backend_URL = "https://madmonkeyz-ecom.onrender.com";
 export const token = sessionStorage.getItem('token');
 
 function App() {
