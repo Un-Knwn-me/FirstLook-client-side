@@ -119,7 +119,7 @@ const Mens = () => {
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 translate-x-full"
             >
-              <div className="w-screen max-w-md">
+              <div className="w-screen max-w-md bg-white overflow-y-scroll">
                 <Transition
                   show={isSidebarOpen}
                   enter="ease-in-out duration-500"
@@ -129,7 +129,7 @@ const Mens = () => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <div className="absolute top-0 right-0 pt-4 pr-4">
+                  <div className="absolute top-0 left-0 pt-4 pl-4">
                     <button
                       type="button"
                       className="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
@@ -140,7 +140,7 @@ const Mens = () => {
                     </button>
                   </div>
                 </Transition>
-                <div className="h-full px-5 flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+                <div className="h-full px-5 flex flex-col py-10 bg-white shadow-xl overflow-y-scroll">
                 <div className="flex justify-between">
             <Typography variant="h6" className="mb-5">
               Filter:-
@@ -310,7 +310,6 @@ const Mens = () => {
               </FormControl>
             </div>
           </div>
-                  <Button size="sm" className="mx-20" onClick={handleFilterChange}>Apply</Button>
                 </div>
               </div>
             </Transition>
