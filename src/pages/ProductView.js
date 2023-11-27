@@ -26,18 +26,6 @@ const ProductView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-  // Set quantity
-  const decreaseQuantity = () => {
-    if (qty > 1) {
-      setQty(qty - 1);
-    }
-  };
-
-  const increaseQuantity = () => {
-    setQty(qty + 1);
-  };
-
   // const [showAlert, setShowAlert] = useState(false);
   // const [severity, setSeverity] = useState('');
   // const [alertMessage, setAlertMessage] = useState('');
@@ -52,6 +40,19 @@ const ProductView = () => {
   // get user
   const userInfo = localStorage.getItem('userInfo');
   const user = userInfo ? JSON.parse(userInfo) : null;
+
+    // Set quantity
+    const decreaseQuantity = () => {
+      if (qty > 1) {
+        setQty(qty - 1);
+      }
+    };
+  
+    const increaseQuantity = () => {
+      if (qty < product.stock) {
+      setQty(qty + 1);
+      }
+    };
 
   // handle add to cart
   const handleAddToCart = async (e) => {
@@ -111,22 +112,22 @@ const ProductView = () => {
       ) : (
         <div>
           {/* navigation */}
-          <div className="m-2 mx-10 md:m-5">
+          <div className="m-2 md:mx-10 md:m-5">
             <Breadcrumbs>
-              <Link to="/" className="opacity-60 m-2">
+              <Link to="/" className="opacity-60 m-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
+                  className="h-4 w-4"
+                  viewBox="0 1 20 20"
                   fill="inherit"
                 >
                   <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                 </svg>
               </Link>
-              <Link to="/men" className="opacity-60 m-2">
-                <span className="text-base">Men</span>
+              <Link to="/men" className="opacity-60 m-1">
+                <span className="text-sm">Men</span>
               </Link>
-              <span className="m-2 text-base">{product.productName}</span>
+              <span className="m-1 text-sm">{product.productName}</span>
             </Breadcrumbs>
           </div>
 
@@ -262,7 +263,7 @@ const ProductView = () => {
                   </p>
 
                   {/* Add to cart */}
-                  <div className="mt-3 mx-5 grid grid-cols-12 gap-3">
+                  <div className="mt-3 mx-5 grid grid-cols-12 gap-5">
                     {/* Left column with product image */}
                     <div className="h-fit col-span-2">
                       <div className="group inline-flex flex-wrap items-center gap-3">
@@ -273,7 +274,7 @@ const ProductView = () => {
                         </Tooltip>
                       </div>
                     </div>
-                    <div className="h-fit text-right col-span-10">
+                    <div className="h-fit ml-3 md:ml-1 text-right col-span-10">
                       <Button
                         onClick={handleAddToCart}
                         type="button"
