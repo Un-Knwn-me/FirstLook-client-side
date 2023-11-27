@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from "../components/Navbar";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import CloseIcon from '@mui/icons-material/Close';
-import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import CloseIcon from '@mui/icons-material/Close';
+// import { useParams } from "react-router-dom";
+// import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControl, FormControlLabel, InputAdornment, RadioGroup, TextField, Typography } from '@mui/material';
 import BpRadio from '../components/SizeCheckbox';
 // import { Button, Input } from '@material-tailwind/react';
@@ -15,61 +15,61 @@ import SearchIcon from '@mui/icons-material/Search';
 // import { Button, } from "@material-tailwind/react";
 
 const Cart = ({ location, history }) => {
-    const { id, qty } = useParams();
+    // const { id, qty } = useParams();
     const [shipping, setShipping] = useState('Standard Delivery');
     const [pincode, setPincode] = useState();
     // const qty = location.search ? Number(location.search.split('=')[1]) : 1
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    console.log(dispatch, id, qty)
+    // console.log(dispatch, id, qty)
 
-    const cart = useSelector(state => state.cart)
-    const { cartItems } = cart;
+    // const cart = useSelector(state => state.cart)
+    // const { cartItems } = cart;
 
     // useEffect((id) => {
     //   dispatch(addToCart(id, qty))
     // },[dispatch, id, qty])
 
-  const [setCartItems] = useState([
-    { id: 1, name: 'Product 1', price: 50, quantity: 2 },
-    { id: 2, name: 'Product 2', price: 30, quantity: 1 }
-    // Add more items as needed
-  ]);
+  // const [setCartItems] = useState([
+  //   { id: 1, name: 'Product 1', price: 50, quantity: 2 },
+  //   { id: 2, name: 'Product 2', price: 30, quantity: 1 }
+  //   // Add more items as needed
+  // ]);
 
-  const removeItem = (id) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCart);
-  };
+  // const removeItem = (id) => {
+  //   const updatedCart = cartItems.filter((item) => item.id !== id);
+  //   setCartItems(updatedCart);
+  // };
 
-  const increaseQuantity = (id) => {
-    const updatedCart = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-    );
-    setCartItems(updatedCart);
-  };
+  // const increaseQuantity = (id) => {
+  //   const updatedCart = cartItems.map((item) =>
+  //     item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+  //   );
+  //   setCartItems(updatedCart);
+  // };
 
-  const decreaseQuantity = (id) => {
-    const updatedCart = cartItems.map((item) =>
-      item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
-    );
-    setCartItems(updatedCart);
-  };
+  // const decreaseQuantity = (id) => {
+  //   const updatedCart = cartItems.map((item) =>
+  //     item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+  //   );
+  //   setCartItems(updatedCart);
+  // };
 
-  const calculateTotal = () => {
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const shippingCharges = 10; // You can adjust this based on your logic
-    const discount = 5; // You can adjust this based on your logic
-    const totalBillingPrice = totalPrice + shippingCharges - discount;
+  // const calculateTotal = () => {
+  //   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  //   const shippingCharges = 10; // You can adjust this based on your logic
+  //   const discount = 5; // You can adjust this based on your logic
+  //   const totalBillingPrice = totalPrice + shippingCharges - discount;
 
-    return {
-      totalPrice,
-      shippingCharges,
-      discount,
-      totalBillingPrice,
-    };
-  };
+  //   return {
+  //     totalPrice,
+  //     shippingCharges,
+  //     discount,
+  //     totalBillingPrice,
+  //   };
+  // };
 
-  const { totalPrice, shippingCharges, discount, totalBillingPrice } = calculateTotal();
+  // const { totalPrice, shippingCharges, discount, totalBillingPrice } = calculateTotal();
 
   return (
     <>
