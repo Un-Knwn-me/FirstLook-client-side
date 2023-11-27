@@ -6,6 +6,9 @@ module.exports = withMT({
     "./src/**/*.{html,js,jsx,ts,tsx}",
   ],
   theme: {
+    colors: {
+      metal: "#D9D9D9",
+    },
     extend: {},
   },
   plugins: [],

@@ -137,7 +137,7 @@ const ProductView = (history) => {
                   {/* Price */}
                   <div className="m-5">
                     <h1 className="text-xl font-medium text-gray-900">
-                      <span className='"text-xl font-normal text-gray-900"'>
+                      <span className="text-xl font-normal text-gray-900">
                         Price:
                       </span>{" "}
                       ₹ {product.salesPrice}{" "}

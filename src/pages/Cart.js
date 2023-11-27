@@ -4,6 +4,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, FormControl, FormControlLabel, InputAdornment, RadioGroup, TextField, Typography } from '@mui/material';
+import BpRadio from '../components/SizeCheckbox';
+// import { Button, Input } from '@material-tailwind/react';
+import SearchIcon from '@mui/icons-material/Search';
 // import { useEffect } from 'react';
 // import RemoveIcon from "@mui/icons-material/Remove";
 // import AddIcon from "@mui/icons-material/Add";
@@ -12,6 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Cart = ({ location, history }) => {
     const { id, qty } = useParams();
+    const [shipping, setShipping] = useState('Standard Delivery');
+    const [pincode, setPincode] = useState();
     // const qty = location.search ? Number(location.search.split('=')[1]) : 1
     const dispatch = useDispatch()
 
@@ -68,8 +74,162 @@ const Cart = ({ location, history }) => {
   return (
     <>
     <Navbar />
+<div className='bg-gray-200 mb-5'>
+    <div className="grid grid-cols-12 gap-6 mx-5 md:mx-20">
+      
+    <div className="h-fit col-span-12 p-5 md:col-span-8">
+    <p className='text-md mb-5'>My Bag</p>
+    {/* pincode & delivery selection */}
+    <div className="rounded-lg bg-white py-5 px-8 shadow-lg md:flex md:justify-between backdrop-blur-md max-sm:px-8">
+      
+      <div>
+      <p className='text-base'>Delivery options:</p>
+        <div className="m-5">
+        <FormControl>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        value={shipping}
+        onChange={(e) => setShipping(e.target.value)}
+      >
+        <FormControlLabel value="Standard Delivery" control={<BpRadio />} label={<Typography variant="body2">Standard Delivery</Typography>} />
+        <FormControlLabel
+          value="disabled"
+          disabled
+          control={<BpRadio />}
+          label={<Typography variant="body2">Express Delivery</Typography>}
+        />
+      </RadioGroup>
+      </FormControl>
+        </div>
+      </div>
+     
+      <div>
+        
+<form>   
+<FormControl sx={{ width: '15ch' }}>
+<TextField
+        required
+        id="pincode"
+        label="Enter pincode"
+        size="small"
+        type='number'
+        value={pincode}
+        onChange={(e) => setPincode(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
+      </FormControl>
+      <Button variant="outlined" sx={{ color: '#000000', borderColor: '#000000', '&:hover': { borderColor: '#000000', color: '#000000', backgroundColor: '#FFFFFF',}, mt:2, ml:1 }} size="small">
+          Check
+        </Button>
+</form>
 
-<div>
+      </div>
+      
+    </div>
+
+{/* List Cart Products */}
+<p className='text-md mb-5 mt-10'>Items (1)</p>
+<div className="rounded-lg bg-white py-1 md:py-5 md:px-8 shadow-lg backdrop-blur-md max-sm:px-8">
+    
+    {/* list */}
+    <div className="max-w-md mx-auto bg-white rounded-md shadow-md overflow-hidden md:max-w-2xl">
+
+  <div className="md:flex">
+    <div className="md:shrink-0">
+      <img className="h-48 w-full object-cover md:w-48" src="https://images.pexels.com/photos/13484361/pexels-photo-13484361.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" alt="Modern building architecture"/>
+    </div>
+    <div className="md:flex md:justify-between gap-6 px-6 py-3">
+      <div className=''>
+        <p className='text-base'>Mad Monkeyz Premium</p>
+        <p className='text-xs text-gray-700'>Solid cotton Men's Black T-shirt</p>
+        <p className='text-sm font-semibold mt-2'>Color: <span className='text-sm font-normal'>Black</span></p>
+        <p className='text-sm font-semibold mt-2'>Size: <span className='text-sm font-normal'>Medium</span></p>
+        <p className='text-sm font-semibold mt-2'>Quantity:</p>
+      </div>
+      <div className='text-right'>
+      <p className="text-md font-normal text-right text-gray-900">
+         ₹ 400 <span className="text-md ml-3 line-through font-medium text-gray-500">₹ 600 </span>
+         </p>
+        <p className="font-light text-xs text-right text-gray-600">
+                      Includes all taxes & GST
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div className='my-5' style={{width: '100%', height: '100%', border: '1px black solid'}}></div>
+<div className='flex justify-center mb-3 md:my-3'>
+<Button variant="text" sx={{ color: '#000000' }}>Remove</Button>
+</div>
+
+  
+</div>
+</div>
+
+    </div>
+    <div className="h-fit col-span-12 md:my-7 md:col-span-4">
+      {/* Promo */}
+      <div className="rounded-lg mt-5 md:mt-10 bg-white py-5 px-8 shadow-lg backdrop-blur-md max-sm:px-8">
+  <label htmlFor="promoCode" className="block text-sm font-medium leading-6 text-gray-900">
+    Promo code:
+  </label>
+  <div className="relative mt-2 rounded-md shadow-sm">
+    <input
+      type="text"
+      name="promoCode"
+      id="promoCode"
+      className="w-full md:w-48 rounded-md border-0 py-1.5 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+      placeholder="Enter Promo/Coupon code"
+    />
+    <Button variant="outlined" sx={{ color: '#000000', borderColor: '#000000', '&:hover': { borderColor: '#000000', color: '#000000', backgroundColor: '#FFFFFF',}, m:1 }} size="small">
+          Apply
+        </Button>
+  </div>
+      </div>
+
+{/* Order summary */}
+      <div className="rounded-lg mt-10 bg-white py-5 px-8 shadow-lg backdrop-blur-md max-sm:px-8">
+      <h1 class="font-medium text-md">Order Summary</h1>
+      <div className='flex justify-between mt-6'>
+        <p className='text-left text-sm'>Sub total</p>
+        <p className='text-right text-sm'>₹ 400</p>
+      </div>
+      <div className='flex justify-between mt-3'>
+        <p className='text-left text-sm'>Shipping Charges</p>
+        <p className='text-right text-sm'>₹ 40</p>
+      </div>
+      <div className='flex justify-between mt-3'>
+        <p className='text-left text-sm'>Discount</p>
+        <p className='text-right text-sm'>- ₹ 0</p>
+      </div>
+      <div className='flex justify-between mt-3'>
+        <p className='text-left text-sm'>Total Saving</p>
+        <p className='text-right text-sm text-green-600'>₹ 200</p>
+      </div>
+      <div className='my-5' style={{width: '100%', height: '100%', border: '1px black solid'}}></div>
+      <div className='flex justify-between mt-3'>
+        <p className='text-left text-lg font-semibold'>Total Price</p>
+        <p className='text-right text-lg font-semibold'>₹ 2000</p>
+      </div>
+      </div>
+    </div>
+    </div>
+
+
+
+
+
+{/* <div>
 <body class="bg-gray-100">
   <div class="container mx-auto mt-10">
     <div class="flex shadow-md my-10">
@@ -117,23 +277,31 @@ const Cart = ({ location, history }) => {
       </div>
 
       <div id="summary" class="w-1/4 px-8 py-10">
-        <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+        {/* PROMO */}
+        {/* <div class="pb-10">
+          <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
+          <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full"/>
+          <button class="bg-red-500 hover:bg-red-600 mt-4 px-5 py-2 text-sm text-white uppercase">Apply</button>
+        </div> */}
+        
+        
+        {/* <h1 class="font-semibold text-2xl border-b">Order Summary</h1>
         <div class="flex justify-between mt-10 mb-5">
-          <span class="font-semibold text-sm uppercase">Items 3</span>
+          <span class="font-semibold text-sm uppercase">Total Item Price:</span>
           <span class="font-semibold text-sm">₹ 335</span>
         </div>
-        <div>
+        <div class="flex justify-between mb-5">
+          <span class="font-semibold text-sm uppercase">Discount:</span>
+          <span class="font-semibold text-sm">₹ 0</span>
+        </div> */}
+        {/* <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
           <select class="block p-2 text-gray-600 w-full text-sm">
             <option>Standard shipping - ₹ 40.00</option>
           </select>
-        </div>
-        <div class="py-10">
-          <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
-          <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full"/>
-        </div>
-        <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
-        <div class="border-t mt-8">
+        </div> */}
+
+        {/* <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total cost</span>
             <span>₹ 335</span>
@@ -145,12 +313,12 @@ const Cart = ({ location, history }) => {
     </div>
   </div>
 </body>
-</div>
+</div> */}
 
     {/* demo */}
-    <div className="flex justify-center mt-8 space-x-9">
+    {/* <div className="flex justify-center mt-8 space-x-9"> */}
       {/* Left Grid - Cart Items */}
-      <div className="flex-grow max-w-md border-r pr-4">
+      {/* <div className="flex-grow max-w-md border-r pr-4">
         <h2 className="text-2xl font-semibold mb-4 flex items-center">
           <ShoppingCartIcon className="w-8 h-8 mr-2" />
           Your Cart
@@ -190,10 +358,10 @@ const Cart = ({ location, history }) => {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Right Grid - Total and Checkout */}
-      <div className="flex-shrink max-w-sm">
+      {/* <div className="flex-shrink max-w-sm">
         <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
         <div className="flex justify-between mb-2">
           <span>Total:</span>
@@ -215,9 +383,15 @@ const Cart = ({ location, history }) => {
         <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
           Proceed to Pay
         </button>
-      </div>
-    </div>
+      </div> */}
+    {/* </div> */}
 
+    <div className='flex justify-center my-5'>
+    <Button variant="outlined" sx={{ color: '#000000', borderColor: '#000000', '&:hover': { borderColor: '#000000', color: '#000000', backgroundColor: '#FFFFFF',},}} size="small">
+          Back
+    </Button>
+</div>
+</div>
     </>
   );
 };

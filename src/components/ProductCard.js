@@ -18,7 +18,6 @@ const ProductCard = ({ product }) => {
     <div className="w-full">
     <Card
       className="overflow-hidden cursor-pointer"
-      key={product._id}
       onClick={() => navigate(`/men/${product._id}`)}
     >
       <CardHeader

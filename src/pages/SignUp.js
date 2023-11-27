@@ -77,9 +77,9 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="grid grid-cols-12 h-screen bg-gray-100">
+      <div className="grid grid-cols-12 gap-6 md:gap-0 h-screen bg-gray-100">
         {/* Left Grid - Image Banner */}
-        <div className="col-span-0 md:col-span-7 hidden lg:flex items-center justify-center h-full bg-gray-900">
+        <div className="col-span-12 md:col-span-7 flex items-center justify-center h-full bg-gray-900">
           {/* <img
           className="object-cover w-full h-full"
           src="your-banner-image.jpg"
