@@ -249,13 +249,13 @@ const SignUp = () => {
                         onChange={(value) => handleShirtChange(value)}
                       >
                         <Option
-                          shirtSize="S"
+                          value="S"
                           className="flex items-center gap-2"
                         >
                           S - <span className="ml-auto">36</span>
                         </Option>
                         <Option
-                          shirtSize="M"
+                          value="M"
                           className="flex items-center gap-2"
                         >
                           M - <span className="ml-auto">38</span>

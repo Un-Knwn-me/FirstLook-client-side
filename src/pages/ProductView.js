@@ -17,12 +17,27 @@ import Alertbar from "../components/Alertbar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import axios from "axios";
+import { Backend_URL, token } from "../App";
 
-const ProductView = (history) => {
+const ProductView = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+  // Set quantity
+  const decreaseQuantity = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
+    }
+  };
+
+  const increaseQuantity = () => {
+    setQty(qty + 1);
+  };
+
   // const [showAlert, setShowAlert] = useState(false);
   // const [severity, setSeverity] = useState('');
   // const [alertMessage, setAlertMessage] = useState('');
@@ -30,31 +45,49 @@ const ProductView = (history) => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  const increaseQuantity = (productId) => {
-    if (qty < product.stock) {
-      setQty(qty + 1);
-      console.log(process.env.REACT_APP_Backend_URL)
-    }
-  };
-
-  const decreaseQuantity = (productId) => {
-    if (qty > 1) {
-      setQty(qty - 1);
-    }
-  };
-
   useEffect(() => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
 
-  const handleAddToCart = async () => {
+  // get user
+  const userInfo = localStorage.getItem('userInfo');
+  const user = userInfo ? JSON.parse(userInfo) : null;
+
+  // handle add to cart
+  const handleAddToCart = async (e) => {
+      e.preventDefault();
     try {
-      // navigate(`/cart/${id}?qty=${qty}`);
-      navigate(`/cart/${id}/${qty}`);
+      // if (!user) {
+      //   navigate('/')
+      //   console.log('User not logged in. Please Login.');
+      //   return;
+      // }
+
+      const response = await axios.post(
+        `${Backend_URL}/users/signup`,
+        JSON.stringify({
+          productId: product._id,
+          quantity: qty,
+          userId: user._id,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        navigate('/cart');
+      } else {
+        console.log('Error adding to cart:', response.statusText);
+      }
+      
       // setSeverity('success');
       // setAlertMessage('Added to cart');
       // setShowAlert(true);
-      await console.log("working");
+      console.log("working");
     } catch (error) {
       console.log(error);
       // setSeverity('error');
@@ -97,7 +130,7 @@ const ProductView = (history) => {
             </Breadcrumbs>
           </div>
 
-          <div className="mx-20">
+          <div className="mx-10 md:mx-20">
             <div className="mx-auto mt-6 sm:px-6">
               <div className="grid grid-cols-12 gap-6">
                 {/* Left column with product image */}
@@ -168,7 +201,7 @@ const ProductView = (history) => {
                       </h3>
                       <Link
                         to="#"
-                        className="text-sm font-medium mr-80 text-indigo-600 hover:text-indigo-500"
+                        className="text-sm font-medium text-right text-indigo-600 hover:text-indigo-500"
                       >
                         Size guide
                       </Link>
@@ -234,13 +267,13 @@ const ProductView = (history) => {
                     <div className="h-fit col-span-2">
                       <div className="group inline-flex flex-wrap items-center gap-3">
                         <Tooltip content="Whislist">
-                          <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                          <span className="cursor-pointer text-left rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
                             <FavoriteIcon className="text-red-800" />
                           </span>
                         </Tooltip>
                       </div>
                     </div>
-                    <div className="h-fit col-span-10">
+                    <div className="h-fit text-right col-span-10">
                       <Button
                         onClick={handleAddToCart}
                         type="button"

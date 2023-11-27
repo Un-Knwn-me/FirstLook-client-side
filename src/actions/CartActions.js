@@ -3,7 +3,13 @@ import axios from 'axios';
 import { Backend_URL, token } from '../App';
 
 export const addToCart = (id, qty) => async(dispatch, getState) => {
-    const { data } = await axios.get(`${Backend_URL}/product/${id}`);
+    const { data } = await axios.get(`${Backend_URL}/product/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     dispatch({
         type: Add_Item,

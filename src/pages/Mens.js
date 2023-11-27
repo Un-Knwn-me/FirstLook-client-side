@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import banner from "../assets/images/mens.jpg";
 import ProductCard from "../components/ProductCard";
@@ -42,14 +42,11 @@ const Mens = () => {
     setSidebarOpen(false);
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, [sortBy]);
 
-  const fetchProducts = async () => {
-    try {
-      // Get products
-      const response = await axios.get(`${Backend_URL}/product/list`, {
+// Get products
+  const fetchProducts = useCallback(async () => {
+    try { 
+      const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +57,11 @@ const Mens = () => {
     } catch (error) {
       console.error("Error fetching products:", error);
     }
-  };
+  }, [sortBy]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   return (
     <>
@@ -475,7 +476,7 @@ const Mens = () => {
               Mad Monkeyz Premium
             </Typography>
             {/* Open Sidebar button */}
-            <div className="block md:hidden">
+            <div className="block md:hidden mt-5">
               <Button size="sm" onClick={toggleSidebar}>
                 Filter
               </Button>
@@ -504,26 +505,30 @@ const Mens = () => {
                   value={sortBy}
                   onChange={(value) => setSortBy(value)}
                 >
-                  <Option sortBy="" className="flex items-center gap-2">
+                  <Option value="" className="flex items-center gap-2">
                     None
                   </Option>
+                  <Option value="name" className="flex items-center gap-2">
+                    A-Z
+                  </Option>
                   <Option
-                    sortBy="createdAt"
+                    value="newestFirst"
                     className="flex items-center gap-2"
                   >
                     Newest
                   </Option>
-                  <Option value="L" className="flex items-center gap-2">
+                  <Option value="oldestFirst" className="flex items-center gap-2">
                     Oldest
                   </Option>
-                  <Option value="XL" className="flex items-center gap-2">
+                  <Option value="highToLow" className="flex items-center gap-2">
                     Price: High to Low
                   </Option>
-                  <Option value="2XL" className="flex items-center gap-2">
+                  <Option value="lowToHigh" className="flex items-center gap-2">
                     Price: Low to High
                   </Option>
                 </Select>
               </div>
+
             </div>
           </div>
 
