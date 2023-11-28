@@ -37,10 +37,6 @@ const ProductView = () => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
 
-  // get user
-  const userInfo = localStorage.getItem('userInfo');
-  const user = userInfo ? JSON.parse(userInfo) : null;
-
     // Set quantity
     const decreaseQuantity = () => {
       if (qty > 1) {
@@ -58,18 +54,11 @@ const ProductView = () => {
   const handleAddToCart = async (e) => {
       e.preventDefault();
     try {
-      // if (!user) {
-      //   navigate('/')
-      //   console.log('User not logged in. Please Login.');
-      //   return;
-      // }
-
       const response = await axios.post(
-        `${Backend_URL}/users/signup`,
+        `${Backend_URL}/cart/addcart`,
         JSON.stringify({
           productId: product._id,
           quantity: qty,
-          userId: user._id,
         }),
         {
           headers: {

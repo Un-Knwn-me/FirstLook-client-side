@@ -2,33 +2,26 @@ import { Add_Item } from "../constants/CartConstants";
 import axios from 'axios';
 import { Backend_URL, token } from '../App';
 
-export const addToCart = (id, qty) => async(dispatch, getState) => {
-    const { data } = await axios.get(`${Backend_URL}/product/${id}`,{
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+export const addToCart = (productId, quantity) => async(dispatch, getState) => {
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+        };
+    
+        const { data } = await axios.post(`${Backend_URL}/cart/addcart`,
+          { productId, quantity },
+          config
+        );
+    
+        dispatch({
+          type: Add_Item,
+          payload: data.cart,
+        });
+      } catch (error) {
+        console.error('Error adding item to cart:', error);
       }
-    );
 
-    dispatch({
-        type: Add_Item,
-        payload: {
-            product: data._id,
-            productName: data.productName,
-            brandName: data.brandName,
-            sku: data.sku,
-            Images: data.images[0],
-            price: data.price,
-            salesPrice: data.salesPrice,
-            category: data.category,
-            size: data.size,
-            color: data.color,
-            stock: data.stock,
-            publish: data.publish,
-            qty
-        }
-    })
-
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
