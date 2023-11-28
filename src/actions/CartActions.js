@@ -2,7 +2,7 @@ import { Add_Item } from "../constants/CartConstants";
 import axios from 'axios';
 import { Backend_URL, token } from '../App';
 
-export const addToCart = (productId, quantity) => async(dispatch, getState) => {
+export const getCart = () => async(dispatch, getState) => {
     try {
         const config = {
             headers: {
@@ -11,8 +11,7 @@ export const addToCart = (productId, quantity) => async(dispatch, getState) => {
               },
         };
     
-        const { data } = await axios.post(`${Backend_URL}/cart/addcart`,
-          { productId, quantity },
+        const { data } = await axios.get(`${Backend_URL}/cart/getProducts`,
           config
         );
     

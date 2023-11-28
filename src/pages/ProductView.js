@@ -67,6 +67,7 @@ const ProductView = () => {
           },
         }
       );
+      console.log(token);
 
       if (response.status === 200) {
         navigate('/cart');
