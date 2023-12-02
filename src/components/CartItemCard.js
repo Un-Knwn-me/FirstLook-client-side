@@ -1,7 +1,7 @@
 import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 
-const CartItemCard = ({ item, updateCartItem }) => {
+const CartItemCard = ({ item, updateCartItem, removeItem }) => {
   const [quantity, setQuantity] = useState(item.quantity);
   const [salesPrice, setSalesPrice] = useState(item.product.salesPrice);
   const [price, setPrice] = useState(item.product.price);
@@ -103,7 +103,7 @@ const CartItemCard = ({ item, updateCartItem }) => {
         <Button
           variant="text"
           sx={{ color: "#000000" }}
-          //   onClick={() => removeItem(item._id)}
+          onClick={() => removeItem(item.product._id)}
         >
           Remove
         </Button>

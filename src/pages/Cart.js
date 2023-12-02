@@ -7,7 +7,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl,
 import BpRadio from '../components/SizeCheckbox';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect } from 'react';
-import { getCart } from '../actions/CartActions';
+import { getCart, removeFromCart } from '../actions/CartActions';
 import CartItemCard from '../components/CartItemCard';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Accordion, AccordionBody, AccordionHeader, Input, Option, Select } from '@material-tailwind/react';
@@ -40,6 +40,12 @@ const Cart = () => {
     useEffect(() => {
       dispatch(getCart());
     }, [dispatch]);
+
+    // remove cart item
+
+    const removeItem = (productId) => {
+      dispatch(removeFromCart(productId));
+    };
     
     // Add address
      const handleClickOpen = () => {
@@ -105,45 +111,23 @@ const Cart = () => {
     setActiveStep((cur) => cur - 1);
   };
 
-  // const [setCartItems] = useState([
-  //   { id: 1, name: 'Product 1', price: 50, quantity: 2 },
-  //   { id: 2, name: 'Product 2', price: 30, quantity: 1 }
-  // ]);
+  const calculateTotal = () => {
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.product.salesPrice * item.quantity, 0);
+    const shippingCharges = 40;
+    const discount = 0; 
+    const totaSaving = cartItems.reduce((acc, item) => acc + (item.product.price - item.product.salesPrice) * item.quantity, 0);
+    const totalBillingPrice = totalPrice + shippingCharges - discount;
 
-  // const removeItem = (id) => {
-  //   const updatedCart = cartItems.filter((item) => item.id !== id);
-  //   setCartItems(updatedCart);
-  // };
+    return {
+      totalPrice,
+      shippingCharges,
+      discount,
+      totalBillingPrice,
+      totaSaving,
+    };
+  };
 
-  // const increaseQuantity = (id) => {
-  //   const updatedCart = cartItems.map((item) =>
-  //     item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-  //   );
-  //   setCartItems(updatedCart);
-  // };
-
-  // const decreaseQuantity = (id) => {
-  //   const updatedCart = cartItems.map((item) =>
-  //     item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
-  //   );
-  //   setCartItems(updatedCart);
-  // };
-
-  // const calculateTotal = () => {
-  //   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  //   const shippingCharges = 10; // You can adjust this based on your logic
-  //   const discount = 5; // You can adjust this based on your logic
-  //   const totalBillingPrice = totalPrice + shippingCharges - discount;
-
-  //   return {
-  //     totalPrice,
-  //     shippingCharges,
-  //     discount,
-  //     totalBillingPrice,
-  //   };
-  // };
-
-  // const { totalPrice, shippingCharges, discount, totalBillingPrice } = calculateTotal();
+  const { totalPrice, shippingCharges, discount, totalBillingPrice, totaSaving } = calculateTotal();
 
   return (
     <>
@@ -222,7 +206,7 @@ const Cart = () => {
         ) : (
     <div>
       {cartItems?.map((item) => (
-        <CartItemCard item={item} key={item.product._id} updateCartItem={updateCartItem} />
+        <CartItemCard item={item} key={item.product._id} removeItem={removeItem} updateCartItem={updateCartItem} />
  ))}
  </div>
 )}
@@ -266,7 +250,7 @@ const Cart = () => {
            <Button
              variant="text"
              className="underline"
-             sx={{ color: '#000000' }}
+             sx={{ color: '#000000', mb: 3 }}
              onClick={handleClickOpen}
            >
              <AddCircleOutlineIcon sx={{ mr:2, }}/>Add New Address
@@ -452,8 +436,8 @@ const Cart = () => {
         
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Save</Button>
+          <Button onClick={handleClose} sx={{ color: '#000000' }} >Cancel</Button>
+          <Button variant='contained' sx={{ backgroundColor: '#000000', '&:hover': { backgroundColor: '#000000'} }} type="submit" onClick={handleClose}>Save</Button>
         </DialogActions>
         </form>
       </Dialog>
@@ -485,24 +469,24 @@ const Cart = () => {
       <h1 className="font-medium text-md">Order Summary</h1>
       <div className='flex justify-between mt-6'>
         <p className='text-left text-sm'>Sub total</p>
-        <p className='text-right text-sm'>₹ 400</p>
+        <p className='text-right text-sm'>₹ {totalPrice}</p>
       </div>
       <div className='flex justify-between mt-3'>
         <p className='text-left text-sm'>Shipping Charges</p>
-        <p className='text-right text-sm'>₹ 40</p>
+        <p className='text-right text-sm'>₹ {shippingCharges}</p>
       </div>
       <div className='flex justify-between mt-3'>
         <p className='text-left text-sm'>Discount</p>
-        <p className='text-right text-sm'>- ₹ 0</p>
+        <p className='text-right text-sm'>- ₹ {discount}</p>
       </div>
       <div className='flex justify-between mt-3'>
-        <p className='text-left text-sm'>Total Saving</p>
-        <p className='text-right text-sm text-green-600'>₹ 200</p>
+        <p className='text-left text-sm'>Total Savings</p>
+        <p className='text-right text-sm text-green-600'>₹ {totaSaving}</p>
       </div>
       <div className='my-5' style={{width: '100%', height: '100%', border: '1px black solid'}}></div>
       <div className='flex justify-between mt-3'>
         <p className='text-left text-lg font-semibold'>Total Price</p>
-        <p className='text-right text-lg font-semibold'>₹ 2000</p>
+        <p className='text-right text-lg font-semibold'>₹ {totalBillingPrice}</p>
       </div>
       </div>
       {/* next stepper */}
@@ -537,46 +521,6 @@ const Cart = () => {
 
       </div>
     </div>
-
-
-
- 
-
-    {/* demo */}
-    <div className="flex justify-center mt-8 space-x-9">
-      {/* Left Grid - Cart Items */}
-       {/* <div className="flex-grow max-w-md border-r pr-4">
-        <h2 className="text-2xl font-semibold mb-4 flex items-center">
-          <ShoppingCartIcon className="w-8 h-8 mr-2" />
-          Your Cart
-        </h2>
-      </div> */}
-
-      {/* Right Grid - Total and Checkout */}
-       {/* <div className="flex-shrink max-w-sm">
-        <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
-        <div className="flex justify-between mb-2">
-          <span>Total:</span>
-          <span>${totalPrice}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span>Shipping Charges:</span>
-          <span>${shippingCharges}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span>Discount:</span>
-          <span>-${discount}</span>
-        </div>
-        <hr className="my-2" />
-        <div className="flex justify-between mt-2">
-          <span className="text-xl font-semibold">Total Billing:</span>
-          <span className="text-xl">${totalBillingPrice}</span>
-        </div>
-        <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-          Proceed to Pay
-        </button>
-      </div> */}
-     </div>
 
     <div className='flex justify-center my-5'>
     <Link to="/men">

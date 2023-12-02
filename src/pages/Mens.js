@@ -10,6 +10,8 @@ import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { FormControl, FormControlLabel, FormLabel, RadioGroup, } from "@mui/material";
 import BpRadio from "../components/SizeCheckbox";
+import { useDispatch } from "react-redux";
+import { listProducts } from "../actions/ProductActions";
 
 const Mens = () => {
   const [products, setProducts] = useState([]);
@@ -21,6 +23,7 @@ const Mens = () => {
   const [size, setSize] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
 
   // filter side bar
   const toggleSidebar = () => {
@@ -42,7 +45,6 @@ const Mens = () => {
     setSidebarOpen(false);
   };
 
-
 // Get products
   const fetchProducts = useCallback(async () => {
     try { 
@@ -60,8 +62,9 @@ const Mens = () => {
   }, [sortBy]);
 
   useEffect(() => {
+    dispatch(listProducts())
     fetchProducts();
-  }, [fetchProducts]);
+  }, [dispatch,fetchProducts]);
 
   return (
     <>
