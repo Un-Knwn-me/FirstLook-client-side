@@ -17,8 +17,13 @@ export const getCart = () => async(dispatch, getState) => {
     
         dispatch({
           type: Add_Item,
-          payload: data.cart,
+          payload: {
+            cart: data.cart,
+            userAddress: data.userAddress,
+          },
         });
+        console.log(data.userAddress)
+        console.log(data.cart)
       } catch (error) {
         console.error('Error adding item to cart:', error);
       }

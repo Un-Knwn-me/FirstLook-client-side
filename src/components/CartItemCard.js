@@ -16,7 +16,7 @@ const CartItemCard = ({ item, updateCartItem }) => {
       setPrice(item.product.price * newQuantity);
 
       // Update the cart item in the backend
-      updateCartItem(item._id, newQuantity);
+      updateCartItem(item.product._id, newQuantity);
     } else {
       // Handle the case where the new quantity exceeds stock (e.g., show a message)
       console.log("Quantity exceeds stock");
@@ -24,8 +24,8 @@ const CartItemCard = ({ item, updateCartItem }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-md p-5 backdrop-blur-md shadow-md mb-10 md:my-3 overflow-hidden md:max-w-2xl">
-      <div className="md:flex">
+    <div className="max-w-md mx-auto bg-white rounded-md backdrop-blur-md shadow-md mb-10 md:my-3 overflow-hidden md:max-w-full">
+      <div className="md:flex p-5">
         {/* item image */}
         <div className="md:shrink-0">
           <img
@@ -80,6 +80,7 @@ const CartItemCard = ({ item, updateCartItem }) => {
               </p>
             </div>
           </div>
+          
           <div className="text-right">
             <p className="text-md font-normal text-right text-gray-900">
               ₹ {salesPrice}{" "}
@@ -94,11 +95,11 @@ const CartItemCard = ({ item, updateCartItem }) => {
         </div>
       </div>
 
+<div className="px-5">
       <div
-        className="my-5"
         style={{ width: "100%", height: "100%", border: "1px black solid" }}
       />
-      <div className="flex justify-center">
+      <div className="flex justify-center py-3">
         <Button
           variant="text"
           sx={{ color: "#000000" }}
@@ -107,6 +108,8 @@ const CartItemCard = ({ item, updateCartItem }) => {
           Remove
         </Button>
       </div>
+      </div>
+
     </div>
   );
 };
